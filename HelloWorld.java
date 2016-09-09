@@ -13,8 +13,7 @@ public class HelloWorld {
 		
 		System.out.println(cardno);
 		System.out.println(redpoint);
-		System.out.println(redpoint2);
-		
+
 		}
 	}
   public static int ttt( int a)
