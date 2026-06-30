@@ -1,0 +1,10 @@
+
+cd /D %JBOSS_HOME%\bin
+
+jboss-cli.bat -c --controller=192.168.169.187:9991
+
+
+# 收單資料下檔DW執行功能
+if (outcome != success) of /system-property=ewallet.manage.ExportIcmbFileBatch.enabled:write-attribute(name="value", value="false")
+    /system-property=ewallet.manage.ExportIcmbFileBatch.enabled:add(value="false")
+end-if

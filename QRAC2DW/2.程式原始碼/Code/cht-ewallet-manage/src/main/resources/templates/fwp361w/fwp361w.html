@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta th:replace="fragments/head_meta :: meta"></meta>
+    <meta th:replace="fragments/resources :: head_resources"></meta>
+    <link th:href="@{/plugins/ui-grid-3.1.1/ui-grid.min.css}"
+          rel="stylesheet" type="text/css"/>
+    <style>
+        .wrap {
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .ui-grid-selectable .ui-grid-disable-selection {
+            -webkit-touch-callout: default;
+            -webkit-user-select: text;
+            -khtml-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+            cursor: auto;
+        }
+
+        .row {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="fragments/body_header :: body_header"></div>
+    <div class="content-wrapper">
+        <div th:replace="fragments/body_header :: content_header"></div>
+        <section class="content" data-ng-app="fwpApp"
+                 data-ng-controller="fwpController">
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">[對帳]-FWP350X對帳資料預轉</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="bindingTimeBegin" class="control-label search-label">執行時間</label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" id="tmTxnTime350" name="tmTxnTime350"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.tmTxnTime350"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Raw' }">(預轉前一天交易資料)
+                                </div>
+
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch350x()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">[對帳]-FWP352X對帳檔比對</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="bindingTimeBegin" class="control-label search-label">執行時間</label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" id="tmTxnTime352" name="tmTxnTime352"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.tmTxnTime352"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Raw' }">(比對前一天交易資料)
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch352x()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">[對帳]-FWP358X店家對帳信件通知</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="bindingTimeBegin" class="control-label search-label">執行時間</label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" id="tmTxnTime358" name="tmTxnTime358"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.tmTxnTime358"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Raw' }">(比對前一天帳務日交易資料)
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch358x()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">[對帳]-FWP366X 產製POS對帳檔</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="bindingTimeBegin" class="control-label search-label">執行時間</label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" id="tmTxnTime366" name="tmTxnTime366"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.tmTxnTime366"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Raw' }">(比對前一天帳務日交易資料)
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch366x()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  data-ng-hide="(isProd == 'production')"
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">模擬主機產生對帳檔</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="produceRec" class="control-label search-label">執行時間</label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" id="produceRec" name="produceRec"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.produceRec"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Raw' }">(比對前一天交易資料)
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="produceRec()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">[撥款]-FWP354X撥款通知信件及產製收據(不包含讀取撥款回應檔)</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label class="control-label search-label">撥款主檔(PK)</label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" id="textInput0" name="textInput0"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.textInput0">
+
+                                <label  class="control-label search-label">執行項目</label>
+                                    <div class="col-sm-3" >
+                                        <select class="form-control" id="fwp354xOption" name="fwp354xOption"
+                                                data-ng-model="search.fwp354xOption" ng-init="search.fwp354xOption=''">
+                                            <option value="">全部</option>
+                                            <option value="M">撥款通知信</option>
+                                            <option value="S">紀錄撥款媒體檔</option>
+                                            <option value="R">產生收據</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch354x()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">[撥款]-FWP367X 產製POS撥款檔</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="control-label search-label">撥款主檔(PK)</label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" id="textInput0" name="textInput0"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.textInput0">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch367x()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form class="form-inline" name="fwpForm1" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">[年費]-FWP360X 首年年費寄信通知</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="control-label search-label">統編</label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" id="companyIdnBan" name="companyIdnBan"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.companyIdnBan">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="sendFirst360Service()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">[年費]-FWP360X 續年年費通知</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="tmTxnTime360" class="control-label search-label">執行時間</label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" id="tmTxnTime360" name="tmTxnTime360"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.tmTxnTime360"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Raw' }">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch360x()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">[年費]-FWP361X 產製年費繳費資訊檔</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="form-inline">
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch361x()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">台灣Pay報表</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class=" row">
+                            <label for="twPayReportTime371" class="control-label search-label col-sm-3">交易日報 LLDTP002
+                                執行時間</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp371xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp371xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime371" name="twPayReportTime371"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime371"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp371xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp371xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen371xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp371xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp371xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <label for="twPayReportTime372" class="control-label search-label col-sm-3">交易月報 LLMTP003
+                                執行時間</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp372xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp372xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime372" name="twPayReportTime372"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime372"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp372xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp372xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen372xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp372xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp372xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <!--                        <div class=" row">-->
+                        <!--                            <label for="twPayReportTime373" class="control-label search-label col-sm-3">觸發單筆上限報表-->
+                        <!--                                LLDTP004 執行時間</label>-->
+                        <!--                            <div class=" col-sm-3"-->
+                        <!--                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp373xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp373xBatch.enabled') != null ? '此報表未啟用' : ''}">-->
+                        <!--                                <div class="form-group">-->
+                        <!--                                    <input type="text" id="twPayReportTime373" name="twPayReportTime373"-->
+                        <!--                                           data-ng-style="{'width':'200px'}" class="form-control"-->
+                        <!--                                           data-ng-model="search.twPayReportTime373"-->
+                        <!--                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"-->
+                        <!--                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp373xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp373xBatch.enabled') != null}">-->
+                        <!--                                </div>-->
+                        <!--                                <button type="button" class="btn btn-primary"-->
+                        <!--                                        data-ng-click="gen373xReport()"-->
+                        <!--                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp373xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp373xBatch.enabled') != null}">-->
+                        <!--                                    執行-->
+                        <!--                                </button>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class=" row">-->
+                        <!--                            <label for="twPayReportTime374" class="control-label search-label col-sm-3">觸發單日上限報表-->
+                        <!--                                LLDTP005 執行時間</label>-->
+                        <!--                            <div class=" col-sm-3"-->
+                        <!--                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp374xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp374xBatch.enabled') != null ? '此報表未啟用' : ''}">-->
+                        <!--                                <div class="form-group">-->
+                        <!--                                    <input type="text" id="twPayReportTime374" name="twPayReportTime374"-->
+                        <!--                                           data-ng-style="{'width':'200px'}" class="form-control"-->
+                        <!--                                           data-ng-model="search.twPayReportTime374"-->
+                        <!--                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"-->
+                        <!--                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp374xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp374xBatch.enabled') != null}">-->
+                        <!--                                </div>-->
+                        <!--                                <button type="button" class="btn btn-primary"-->
+                        <!--                                        data-ng-click="gen374xReport()"-->
+                        <!--                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp374xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp374xBatch.enabled') != null}">-->
+                        <!--                                    執行-->
+                        <!--                                </button>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class=" row">-->
+                        <!--                            <label for="twPayReportTime375" class="control-label search-label col-sm-3">觸發單月上限報表-->
+                        <!--                                LLMTP004 執行時間</label>-->
+                        <!--                            <div class=" col-sm-3"-->
+                        <!--                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp375xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp375xBatch.enabled') != null ? '此報表未啟用' : ''}">-->
+                        <!--                                <div class="form-group">-->
+                        <!--                                    <input type="text" id="twPayReportTime375" name="twPayReportTime375"-->
+                        <!--                                           data-ng-style="{'width':'200px'}" class="form-control"-->
+                        <!--                                           data-ng-model="search.twPayReportTime375"-->
+                        <!--                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"-->
+                        <!--                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp375xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp375xBatch.enabled') != null}">-->
+                        <!--                                </div>-->
+                        <!--                                <button type="button" class="btn btn-primary"-->
+                        <!--                                        data-ng-click="gen375xReport()"-->
+                        <!--                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp375xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp375xBatch.enabled') != null}">-->
+                        <!--                                    執行-->
+                        <!--                                </button>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <div class=" row">
+                            <label for="twPayReportTime376" class="control-label search-label col-sm-3">交易警示報表 LLDTP003
+                                執行時間</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp376xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp376xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime376" name="twPayReportTime376"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime376"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp376xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp376xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen376xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp376xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp376xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <label for="twPayReportTime378" class="control-label search-label col-sm-3">交易警示報表(風險紀錄簿)-LLSTP001</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp378xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp378xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime378" name="twPayReportTime378"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime378"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp378xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp378xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen378xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp378xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp378xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <label for="twPayReportTime379" class="control-label search-label col-sm-3">交易警示統計報表(風險紀錄簿)-LLSTP002</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp379xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp379xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime379" name="twPayReportTime379"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime379"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp379xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp379xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen379xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp379xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp379xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <label for="twPayReportTime380" class="control-label search-label col-sm-3">交易成長監控報表-LLSTP003</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp380xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp380xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime380" name="twPayReportTime380"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime380"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp380xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp380xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen380xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp380xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp380xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <label for="twPayReportTime381" class="control-label search-label col-sm-3">交易成長監控統計報表(風險紀錄簿)-LLSTP004</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp381xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp381xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime381" name="twPayReportTime381"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime381"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp381xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp381xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen381xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp381xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp381xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <label for="twPayReportTime382" class="control-label search-label col-sm-3">合作廠商分潤手續費報表-LLMTP005</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp382xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp382xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime382" name="twPayReportTime382"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime382"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp382xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp382xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen382xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp382xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp382xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <label for="twPayReportTime384" class="control-label search-label col-sm-3">小規模營業人各月銷售額資料表-LLMPRPT4</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp384xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp384xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime384" name="twPayReportTime384"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime384"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp384xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp384xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen384xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp384xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp384xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <label for="twPayReportTime383" class="control-label search-label col-sm-3">小規模營業人租稅優惠業務統計月報表-LLMPRPT5</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp383xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp383xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime383" name="twPayReportTime383"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime383"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp383xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp383xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen383xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp383xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp383xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <label for="twPayReportTime385" class="control-label search-label col-sm-3">店家/負責人為警示/管制帳戶日報-LLDTP007</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp385xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp385xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen385xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp385xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp385xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <label for="twPayReportTime386" class="control-label search-label col-sm-3">應退店家手續費報表-LLMTP006</label>
+                            <div class=" col-sm-3"
+                                 th:attr="title=${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp386xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp386xBatch.enabled') != null ? '此報表未啟用' : ''}">
+                                <div class="form-group">
+                                    <input type="text" id="twPayReportTime386" name="twPayReportTime386"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.twPayReportTime386"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}"
+                                           th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp386xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp386xBatch.enabled') != null}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="gen386xReport()"
+                                        th:disabled="${#bools.isFalse(@environment.getProperty('ewallet.manage.Fwp386xBatch.enabled')) && @environment.getProperty('ewallet.manage.Fwp386xBatch.enabled') != null}">
+                                    執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-inline" name="fwpFormDisb" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">FWP368X 營業日更新批次</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class=" row">
+                            <div class=" col-sm-3">
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch368x()">執行批次
+                                </button>
+                            </div>
+                        </div>
+                        <div class=" row">
+                            <div class=" col-sm-12">
+                                <input class="form-control" id="accountDate" name="accountDate"
+                                       data-ng-maxlength="8" data-ng-model="search.accountDate"
+                                       placeholder="帳務日(YYYYMMDD)">
+                                <input class="form-control" id="allocatedDays" name="allocatedDays"
+                                       ng-pattern="/^[0-9]+$/" data-ng-model="search.allocatedDays" placeholder="撥款日">
+                                <input class="form-control" id="disbursementDate" name="disbursementDate"
+                                       data-ng-model="model.disbursementDate" placeholder="撥款日期(YYYYMMDD)"
+                                       readonly>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="!validate(fwpFormDisb) || getDisbursementDate()">計算撥款日期
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">FWP490X 更新信用卡卡號批次</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class=" row">
+                            <label for="tmTxnTime490" class="control-label search-label col-sm-1">交易日期</label>
+                            <div class=" col-sm-3">
+                                <div class="form-group">
+                                    <input type="text" id="tmTxnTime490" name="tmTxnTime490"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.tmTxnTime490"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch490x()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form-inline" name="fwpForm" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">錢包清單批次FWP370X</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class=" row">
+                            <label for="walletListTime" class="control-label search-label col-sm-1">錢包日期</label>
+                            <div class=" col-sm-3">
+                                <div class="form-group">
+                                    <input type="text" id="walletListTime" name="walletListTime"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.walletListTime"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}">
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                        data-ng-click="batch370x()">執行
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+                <form class="form-inline" name="fwpICMBExport" data-c-enter-tab
+                  data-c-form-validation={ignoreHidden:false,ignoreReadonly:false}
+                  novalidate>
+                <div class="box box-solid box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">收單資料下檔DW執行功能</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="execBatchTime" class="control-label search-label col-sm-1">日期</label>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <input type="text" id="execBatchTime" name="execBatchTime"
+                                           data-ng-style="{'width':'200px'}" class="form-control"
+                                           data-ng-model="search.execBatchTime"
+                                           data-c-date-picker="{format : 'yyyy-MM-dd ', converter : 'Date'}">
+		                          
+                                </div>
+                                     <button type="button" class="btn btn-primary"
+		                                        data-ng-click="exportIdmbFileBatch()">執行
+		                             </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div th:replace="fragments/body_footer :: footer"></div>
+</div>
+
+<div th:replace="fragments/resources :: body_resources"></div>
+<script type="text/javascript" th:src="@{/scripts/confirmDialogOptionBuilder.js}"></script>
+<script type="text/javascript" th:src="@{/scripts/eWalletCommon.js}"></script>
+<script type="text/javascript" th:src="@{/scripts/fwp361w.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/ui-grid-3.1.1/ui-grid.min.js}"></script>
+<script type="text/javascript" th:src="@{/plugins/ckeditor_4.3.5/ckeditor.js}"></script>
+
+</body>
+</html>
+

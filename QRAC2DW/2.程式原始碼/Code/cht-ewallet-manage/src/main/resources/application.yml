@@ -1,0 +1,735 @@
+#################### Spring設定 ####################
+# 指定現在要用的profile
+spring.profiles.active: development, NOTIFY_TEST
+
+# EMBEDDED SERVER CONFIGURATION (ServerProperties)
+server.contextPath: /ewallet-manage
+server.port: 8070
+
+# JPA (JpaBaseConfiguration, HibernateJpaAutoConfiguration)
+spring.jpa.database-platform: com.cht.commons.persistence.hibernate.dialect.SQLServer2012UnicodeDialect
+spring.jpa.hibernate.naming.strategy: org.hibernate.cfg.EJB3NamingStrategy
+spring.jpa.properties.jadira.usertype.autoRegisterUserTypes: true
+
+# ENDPOINTS (AbstractEndpoint subclasses)
+endpoints.enabled: false
+
+# INTERNATIONALIZATION (MessageSourceAutoConfiguration)
+spring.messages.basename: i18n/messages
+
+# MULTIPART (MultipartProperties)
+spring.http.multipart.maxFileSize: 10Mb
+# JAVA端最大檔案大小設定 (將上面spring.http.multipart.maxFileSize大小乘1024乘1024)
+ewallet.max.file.size: 10485760
+
+spring.http.multipart.maxRequestSize: 20Mb
+
+# JACKSON (JacksonProperties)
+spring.jackson.serialization.write_dates_as_timestamps: false
+
+# Email (MailProperties)
+spring.mail.host: 10.160.1.50
+spring.mail.port: 25
+#spring.mail.username:
+#spring.mail.password:
+#spring.mail.properties.mail.smtp.auth: true
+#spring.mail.properties.mail.smtp.starttls.enable: true
+
+#################### CHT設定 ####################
+# 系統代號
+cht.application.id: ewallet-manage
+
+# 系統名稱
+cht.application.name: 兆豐銀行QRCode行動支付後台管理系統
+
+# 可忽略認證的PATH
+cht.security.ignored: /plugins/**,/docs/**,/files/**,/scripts/**,/assets/**,/styles/**,/images/**,/applets/**,/ssoAuth401,/401,/403,/404,/500,/**/favicon.ico,/api-cht/properties/front-end,/ws/**,/generateCaptcha/**,/echoTest,/api/system/**
+#cht.security.login.authentication.iam.apiaccess.auth.ignored:
+cht.security.login.relogin.enabled: false
+
+# 套用wro
+cht.thymeleaf.wro4j.use-bundled: true
+
+#框架 UI回覆系統執行時間Format 設定
+cht.jackson.date-format: yyyy-MM-dd HH:mm:ss
+
+#CMS資料放置位置
+cms.filePath: D:/cmsdata/ewallet-manage
+
+#################### cht-ewallet 設定 ####################
+
+# log 存放目錄
+logging.path: D:/ewalletdata
+
+# 本行銀行代號
+ewallet.self.bank.code: "017"
+
+ewallet.self.bank.name: "兆豐銀行"
+
+# 信用卡總行區分代號
+ewallet.manage.branchCode.code: "900,917,109,Z09,z09"
+
+# FWP408W-特約商店家數統計查詢
+
+# 發信來源EMAIL
+ewallet.mail.from: ewallet@cht.com.tw
+# 發信來源名稱
+ewallet.mail.name: QRCode行動支付系統信件通知
+
+#HSM Server URL
+data.security.hsm.url: http://192.168.51.179:9080/macserver
+#HSM 連線逾時設定(ms)
+data.security.hsm.connection.timeout: 20000
+# 是否啟動HSM 加密 (true:使用HSM, false:不使用HSM)
+data.security.hsm.enabled: true
+# 資料是否啟用加密機制 (true:進行資料加解密(AES.java), false:不進行資料加解密(AES.java))
+data.security.crypto.enabled: true
+
+# SSO 設定
+# 是否開啟模擬模式
+bank.sso.mock: true
+# SSO 服務網址
+bank.sso.url: http://192.168.51.224/EMPSSO/SSO
+# SSO參數: 系統代號
+bank.sso.sysname: QRMPNEW
+# SSO 登出網址
+bank.sso.logouturl: http://192.168.51.224/EMPSSO/LOGIN/SSOLogin
+# SSO 忽略驗證網址
+bank.sso.validateSession.ignored: /api-cht/**
+
+# 定期清除 Cache 的排程是否開啟
+ewallet.cache.evict.schedule.enabled: true
+# 定期清除 Cache 的時間間隔(milli-seconds)
+#ewallet.cache.evict.schedule.fixed.delay: 600000
+# 要定期清除的 cache 名稱, 以 , 分隔
+#ewallet.cache.evict.cacheNames: SYSTEM_MESSAGE_CACHE1
+# 要定期清除cache 相關 db table 名稱, 以 , 分隔
+#ewallet.cache.evict.detect.tableNames: system_message,system_setting,creditcard_card_face,subcontractor,app_version,tax,tax_campaign,seller_agreement,advertisement,fee_type_info,member_agreement,mega_branch,bank,notices_setting,seller_role,seller_menu,teleservice_message,API_KEY_CONFIG,API_DEFINITION,MERCHANT_COMPANY_PUBLIC_KEY_CACHE,MERCHANT_NO_HQ_IDNBAN_POS_CACHE,MERCHANT_NO_HQ_IDNBAN_NEG_CACHE,MERCHANT_NO_HQ_IDNBAN_CONNECT_CACHE
+# 定期偵測需要清除 Cache 的時間間隔(milli-seconds)
+ewallet.cache.evict.detect.schedule.fixed.delay: 30000
+
+# 內部電文設定 (PROD、FAKER)
+tele.type: FAKER
+
+# 外部電文設定 (FISC、FISC_FAKER)
+external.tele.type: FISC_FAKER
+
+# e-Bill電文類型 (PROD、FAKER)
+ebill.tele.type: FAKER
+
+# 關貿綜所稅電文類型 (PROD、FAKER)
+tv.tele.type: FAKER
+
+# 信用卡電文設定
+# salt for verifying data intergrity (資料完整性驗證)
+ewallet.telegram.request.salt: RQ2018-9990-!@1#$4%^7&*5(-6#/6+`8^&8)-3_=1|/1?
+ewallet.telegram.response.salt: RS2018-9990-!99(*^9-1_=@|/1%^`#77(-#$&888*/6+)1?
+ewallet.api.request.salt: RQ2018-9990-!@1#$4%^7&*5(-6#/6+`8^&8)-3_=1|/1?
+
+# 財金台灣Pay會員平台 LINE帳號綁定 電文類型 (PROD、FAKER)
+line.tele.type: FAKER
+
+# 財金台灣Pay會員平台 是否要檢核請求訊息押碼MAC值
+line.tele.mac.check.enabled: false
+
+# 店家管理 可繳費扣款之總公司統編
+ewallet.acq.transaction.refund.afterAllocationDay.byPayment.companyBanList: "48915025,28402096,00013223"
+
+#####################################
+# 批次設定(共用)
+#####################################
+#批次排程開關設定
+ewallet.manage.schedule.enabled: true
+
+# 發卡金融卡購物逾時交易輪詢批次作業開關
+ewallet.core.IssDebitPurchaseTxnInquiryBatch.enabled: false
+# 發卡金融卡P2P轉帳逾時交易輪詢批次作業開關
+ewallet.core.IssDebitTransferTxnInquiryBatch.enabled: false
+# 發卡繳費逾時交易輪詢批次作業開關
+ewallet.core.IssPaymentTxnInquiryBatch.enabled: false
+
+# email 重送排程啟動
+ewallet.manage.EmailResendBatch.enabled: true
+# email 重送排程頻率
+ewallet.email.resend.minutes: 15
+# email 重送次數
+ewallet.email.resend.times.limits: 5
+
+# 特店建檔
+ewallet.schedule.fisc.mock.enabled: true
+
+# ewalletdata 傳送與接收資料夾
+ewallet.file.recv.folder: D:/ewalletdata/recv
+ewallet.file.send.folder: D:/ewalletdata/send
+ewallet.file.pos.folder: D:/ewalletdata/pos
+
+# OutboundTransactionNotification 重送排程啟動
+ewallet.manage.Fwp951xBatch.enabled: true
+# OutboundTransactionNotification 重送排程頻率
+ewallet.outboundTransactionNotification.resend.minutes: 15
+# OutboundTransactionNotification 重送次數
+ewallet.outboundTransactionNotification.resend.times.limits: 5
+# OutboundTransactionNotification 重送筆數
+ewallet.outboundTransactionNotification.resend.amount: 50
+
+#####################################
+# 批次設定(收單)
+#####################################
+# FWP350X-對帳資料預轉批次
+ewallet.manage.fwp350x.cronExpression: "0 0 3 * * ?"
+
+# FWP351X-店家資訊，相關設定上傳至FTP
+ewallet.manage.fwp351x.filePath: /store
+ewallet.manage.fwp351x.cronExpression: "0 30 8-18/3 * * ?"
+
+# FWP352X-產製對帳檔回覆檔批次，相關設定下載至本地
+ewallet.manage.fwp352x.filePath: /recon
+ewallet.manage.fwp352x.cronExpression: "0 30 6 * * ?"
+
+# FWP353X-產製撥款檔批次，相關設定上傳至FTP
+ewallet.manage.fwp353x.filePath: /disb
+ewallet.manage.fwp353x.fileName: qrmp_disb
+ewallet.manage.fwp353x.cronExpression: "0 20 7 * * ?"
+
+# FWP354X-讀取撥款回覆檔，相關設定下載至本地
+ewallet.manage.fwp354x.filePath: /disb
+ewallet.manage.fwp354x.fileName: qrmp_disbr
+ewallet.manage.fwp354x.cronExpression: "0 0 8 * * ?"
+
+# FWP358X-店家對帳信件通知 批次
+ewallet.manage.fwp358x.cronExpression: "0 0 7 * * ?"
+
+# FWP360X-排程續年年費批次作業
+ewallet.manage.fwp360x.cronExpression: "0 0 1 * * ?"
+
+# FWP361X-產製年費繳款資訊檔批次，相關設定上傳至FTP
+ewallet.manage.fwp361x.filePath: /ar
+ewallet.manage.fwp361x.fileName: qrmp_ar
+ewallet.manage.fwp361x.cronExpression: "0 0 6 * * ?"
+
+# FWP366X-POS對帳通知
+ewallet.manage.fwp366x.filePath: /recon
+ewallet.manage.fwp366x.cronExpression: "0 30 7 * * ?"
+
+# FWP367X-POS 撥款批次
+ewallet.manage.disb.filePath: /disb
+ewallet.manage.fwp367x.cronExpression: "0 20 8 * * ?"
+
+# FWP368X 營業日更新批次
+ewallet.manage.fwp368x.cronExpression: "0 10 1 * * ?"
+
+# FWP369X 收單行銷交易金額監控批次作業
+#ewallet.manage.fwp369x.enabled: false
+#ewallet.manage.fwp369x.cronExpression: "0 0 6,14 * * ?"
+# 收單行銷交易金額監控 - 監控交易起訖日(yyyyMMdd)
+#ewallet.acq.marketingEvent.monitor.startdate: 20200528
+#ewallet.acq.marketingEvent.monitor.enddate: 20201231
+# 收單行銷交易金額監控 - 付款方式:金融卡、信用卡(含主被掃交易)
+#ewallet.acq.marketingEvent.monitor.paytype: DC
+# 收單行銷交易金額監控 - 總公司統編
+#ewallet.acq.marketingEvent.monitor.companyBan: 59148438
+# 收單行銷交易金額監控 - 單筆滿多少金額回饋 (EX:500)
+#ewallet.acq.marketingEvent.monitor.rebateTargetAmt: 500
+# 收單行銷交易金額監控 - 回饋百分比率(%)(EX:15%)
+#ewallet.acq.marketingEvent.monitor.rebatePercentage: 15
+# 收單行銷交易金額監控 - 單筆回饋上限金額 (EX:500)
+#ewallet.acq.marketingEvent.monitor.maxRebateAmt: 500
+# 收單行銷交易金額監控 - 警示水位金額
+#ewallet.acq.marketingEvent.monitor.rebateAlarmLevel: 800000
+# 收單行銷交易金額監控 - 監控通知mail清單(多組時可用「,」分隔)
+#ewallet.acq.marketingEvent.monitor.mailList:
+# 收單行銷交易金額監控 - 監控通知簡訊號碼清單(多組時可用「,」分隔)
+#ewallet.acq.marketingEvent.monitor.mobileNoList:
+
+# [報表簽核系統]FWP371X-FWP376X 批次
+ewallet.manage.twPayReport.filePath: /report
+# [報表簽核系統]FWP371X-每日，交易日報-LLDTP002
+ewallet.manage.Fwp371xBatch.enabled: false
+ewallet.manage.fwp371x.cronExpression: "0 0 4 * * ?"
+# [報表簽核系統]FWP372X-每月，交易月報-LLMTP003
+ewallet.manage.Fwp372xBatch.enabled: false
+ewallet.manage.fwp372x.cronExpression: "0 20 4 1 * ?"
+# [報表簽核系統]FWP373X-每日，觸發單筆上限報表-LLDTP004
+ewallet.manage.Fwp373xBatch.enabled: false
+ewallet.manage.fwp373x.cronExpression: "0 30 4 * * ?"
+# [報表簽核系統]FWP374X-每日，觸發單日上限報表-LLDTP005
+ewallet.manage.Fwp374xBatch.enabled: false
+ewallet.manage.fwp374x.cronExpression: "0 40 4 * * ?"
+# [報表簽核系統]FWP375X-每日，觸發單日上限報表-LLMTP004
+ewallet.manage.Fwp375xBatch.enabled: false
+ewallet.manage.fwp375x.cronExpression: "0 50 4 1 * ?"
+# [報表簽核系統]FWP376X-每日，交易警示報表-LLDTP003
+ewallet.manage.Fwp376xBatch.enabled: false
+ewallet.manage.fwp376x.cronExpression: "0 0 5 * * ?"
+# [報表簽核系統]FWP378X-每季，交易警示報表(風險紀錄簿)-LLSTP001
+ewallet.manage.Fwp378xBatch.enabled: false
+ewallet.manage.fwp378x.cronExpression: "0 0 6 1 1,4,7,10 ?"
+# [報表簽核系統]FWP379X-每季，交易警示統計報表(風險紀錄簿)-LLSTP002
+ewallet.manage.Fwp379xBatch.enabled: false
+ewallet.manage.fwp379x.cronExpression: "0 10 6 1 1,4,7,10 ?"
+# [報表簽核系統]FWP380X-每季，交易成長監控報表-LLSTP003
+ewallet.manage.Fwp380xBatch.enabled: true
+ewallet.manage.fwp380x.cronExpression: "0 20 6 1 1,4,7,10 ?"
+# [報表簽核系統]FWP381X-每季，交易成長監控統計報表(風險紀錄簿)-LLSTP004
+ewallet.manage.Fwp381xBatch.enabled: true
+ewallet.manage.fwp381x.cronExpression: "0 30 6 1 1,4,7,10 ?"
+# [報表簽核系統]FWP382X-每月，合作廠商分潤手續費報表-LLMTP005
+ewallet.manage.Fwp382xBatch.enabled: false
+ewallet.manage.fwp382x.cronExpression: "0 10 5 * * ?"
+# [報表簽核系統]FWP383X-每月，小規模營業人租稅優惠業務統計月報表-LLMPRPT5
+ewallet.manage.Fwp383xBatch.enabled: false
+ewallet.manage.fwp383x.cronExpression: "0 20 5 2 * ?"
+# [報表簽核系統]FWP384X-每季，小規模營業人各月銷售額資料表-LLMPRPT4
+ewallet.manage.Fwp384xBatch.enabled: true
+ewallet.manage.fwp384x.cronExpression: "0 40 6 2 1,4,7,10 ?"
+ewallet.manage.fwp384x.blof.ftp.path: /BLOF/PAY_SEND
+# [報表簽核系統]FWP385X-每營業日，店家/負責人為警示/管制帳戶日報-LLDTP007
+ewallet.manage.Fwp385xBatch.enabled: false
+ewallet.manage.fwp385x.cronExpression: "0 0 10 * * ?"
+# [報表簽核系統]FWP386X-每月5號(含)之後第一個營業日，台灣Pay QR Code代收業務 - 應退店家手續費報表-LLMTP006
+ewallet.manage.Fwp386xBatch.enabled: false
+ewallet.manage.fwp386x.cronExpression: "0 30 5 * * ?"
+ewallet.manage.Fwp386xBatch.hqbanidns:
+# [報表簽核系統]FWP377X-央行電子支付統計資料、表三(銀行帳戶及金融卡消費交易統計報表)-LLMTP002
+ewallet.manage.Fwp377xBatch.enabled: false
+ewallet.manage.fwp377x.cronExpression: "0 35 4 1 * ?"
+# 更新信用卡卡號批次
+ewallet.manage.Fwp490xBatch.enabled: true
+ewallet.manage.fwp490x.cronExpression: "0 0 11 * * ?"
+
+# FWP355X-財金特店檔案上傳檔案
+ewallet.manage.fwp355x.cronExpression: "0 40 8 * * ?"
+
+# FWP356X-財金特店檔案下載檔案
+ewallet.manage.fwp356x.cronExpression: "0 10 9 * * ?"
+
+# 收單批次-錢包清單批次FWP370X
+ewallet.manage.fwp370x.cronExpression: "0 52 7 * * ?"
+
+# 收單資料下檔DW執行功能
+ewallet.manage.ExportIcmbFileBatch.enabled: true
+ewallet.manage.icmb0001.cronExpression: "0 0 3 * * ?"
+ewallet.manage.icmb0002.cronExpression: "0 10 3 * * ?"
+ewallet.manage.icmb0003.cronExpression: "0 20 3 * * ?"
+ewallet.manage.icmb0004.cronExpression: "0 30 3 * * ?"
+ewallet.manage.icmb0005.cronExpression: "0 40 3 * * ?"
+ewallet.manage.icmb0006.cronExpression: "0 50 3 * * ?"
+
+# FWP355X FWP356X
+ewallet.fisc.folder.path: /fisc
+ewallet.schedule.file.fisc.send.name: M01700000.ICTERQND.%s
+ewallet.schedule.file.fisc.send.new.term.name: M01700000.ICTEMQND.%s
+ewallet.schedule.file.fisc.recv.name: F01700000.ICTERPND.%s
+ewallet.schedule.file.fisc.merchent.send.name: M01700000.ICMETQND.%s
+ewallet.schedule.file.fisc.credit.send.name: F01700000.CPROMERD.%s
+ewallet.schedule.file.fisc.month.limit.send.name: M01700000.ICMTCQND.%s
+
+# FWP357X-撥款日更新批次
+ewallet.manage.fwp357x.cronExpression: "0 30 0 * * ?"
+
+# FWP950X-個資查詢稽核記錄上傳
+ewallet.manage.fwp950x.filePath: /privacy
+ewallet.manage.fwp950x.cronExpression: "0 10 0 * * ?"
+
+# FWP952X-member token housekeeping
+ewallet.manage.fwp952x.cronExpression: "0 0 2 * * ?"
+
+#####################################
+# 批次設定(發卡)
+#####################################
+# ExportIdmbFileBatch-產製 (DW資料彙入) 資料檔及控制檔，StoreProcedure時間設定02:00
+ewallet.manage.dw.filePath: /dw
+# FWP362X-IDMB0002_交易紀錄統計
+ewallet.manage.fwp362x.cronExpression: "0 20 2 * * ?"
+# FWP363X-IDMB0003_金融卡綁定資料
+ewallet.manage.fwp363x.cronExpression: "0 30 2 * * ?"
+# FWP364X-IDMB0004_信用卡綁定資料
+ewallet.manage.fwp364x.cronExpression: "0 40 2 * * ?"
+# FWP365X-IDMB0005_功能設定統計
+ewallet.manage.fwp365x.cronExpression: "0 50 2 * * ?"
+# FWP200X 製作.D.H檔
+ewallet.manage.fwp200x.enabled: true
+ewallet.manage.fwp200x.cronExpression: "0 0/10 * * * ?"
+# FWP201X 上傳紅利匯入檔批次
+ewallet.manage.fwp201x.enabled: true
+ewallet.manage.fwp201x.cronExpression: "0 0 0/1 * * ?"
+# FWP202X 下載紅利匯入回應檔批次
+ewallet.manage.fwp202x.enabled: true
+ewallet.manage.fwp202x.cronExpression: "0 30 7 * * ?"
+# FWP203X 紅利匯入搬檔封存批次批次
+ewallet.manage.fwp203x.enabled: true
+ewallet.manage.fwp203x.cronExpression: "0 30 3 * * ?"
+# 搬檔壓縮幾天前的檔案(最低只能設定壓縮3天以前的檔案)
+ewallet.manage.fwp203x.archive.file.days.ago: 5
+# FWP204X 重送紅利匯入主機通知與上傳批次
+ewallet.manage.fwp204x.enabled: true
+ewallet.manage.fwp204x.cronExpression: "0 0/10 * * * ?"
+# FWP205X 重送台電繳費處理結果電文批次
+ewallet.manage.fwp205x.enabled: true
+ewallet.manage.fwp205x.cronExpression: "0 0/30 * * * ?"
+ewallet.manage.fwp205x.resend.count.maximum: 6
+# FWP206X 重送新台水繳費處理結果電文批次
+ewallet.manage.fwp206x.enabled: true
+ewallet.manage.fwp206x.cronExpression: "0/30 * * * * ?"
+ewallet.manage.fwp206x.resend.count.maximum: 3
+
+# tv ePayTax 關貿手機繳稅 API 設定
+tvepaytax.url: http://localhost:8099/tvepaytax
+# tv epayTax member 關貿手機繳稅 API 對應兆豐系統代號
+tvepaytax.memberId: 0EP017
+# manage對edge-gateway逾時時間設定為35秒
+tvepaytax.request.timeout: 35000
+# tv epayTax 設定ssl開關
+tvepaytax.ssl: true
+# 關貿電文重送排程啟動
+ewallet.manage.TvEpayResultResendBatch.enabled: true
+# 關貿電文重送排程頻率
+ewallet.manage.tvepayresult.resend.minutes: 10
+# 關貿電文重送次數
+ewallet.manage.tvepayresult.resend.count.maximum: 3
+
+# LINE會員卡片異動同步財金台灣Pay會員平台 重送排程啟動
+ewallet.manage.LineEventCardModifyResendBatch.enabled: true
+# LINE會員卡片異動同步財金台灣Pay會員平台 重送排程頻率
+ewallet.line.event.card.modify.resend.minutes: 35
+# LINE會員綁定和解除狀態同步中心主機 重送排程啟動
+ewallet.manage.LineMemberStatusSyncResendBatch.enabled: true
+# LINE會員綁定和解除狀態同步中心主機 重送排程頻率
+ewallet.line.member.status.sync.resend.minutes: 15
+
+#QRCode金融卡購物收單系統網址
+ewallet.receiveQrpResult.url: http://203.66.132.119/ewallet-mega/receiveQrpResult
+#QRCode金融卡主動發送通知訊息網址
+ewallet.receiveQrpOutResult.Notify.url: http://203.66.132.119/ewallet-mega/receiveQrpOutResult
+#廣告管理存放檔案位置
+ewallet.image.banner: D:/ewalletdata/image/banner
+ewallet.image.banner.ftpUploadPath: /mb/creditcard
+#信用卡卡面存放檔案位置
+ewallet.image.creditCardPicture: D:/ewalletdata/image/creditCardPicture
+ewallet.image.creditCard.ftpUploadPath: /mb/creditcard
+#營業日API 是否啟用 ，乙測無營業日API
+ewallet.businessDate.enabled: true
+#啟用上傳，乙測無FTP
+ewallet.ftp.upload.enabled : true
+
+# 預設http 請求逾時時間
+ewallet.http-client.request.timeout: 60000
+
+# 店家交易主動通知http 請求逾時時間
+ewallet.merchant-txn-notify.request.timeout: 60000
+
+##### 兆豐內部服務#####
+# EMAIL
+#  兆豐EMAIL服務網址
+com.megabank.email.service.url: http://192.168.211.162/Billhunter/bills_ap2/BH_Ap2ApReq.aspx
+# EMAIL服務參數: 系統代號
+com.megabank.email.notificationInfo.srcSystemID: QRMP
+# EMAIL服務參數: 模板類別
+com.megabank.email.notificationInfo.category: QRMP-001
+# EMAIL服務參數: 模板類別，附件有加密
+com.megabank.email.notificationInfo.category.contains.encrypted.attachment: QRMP-002
+# EMAIL服務參數: 分行代號
+com.megabank.email.notificationInfo.contactInfo.from.mailBrn: 917
+# EMAIL服務參數: 發送單位
+com.megabank.email.notificationInfo.contactInfo.from: 兆豐銀行(Mega Bank)
+# EMAIL服務參數: 發送單位統編
+com.megabank.email.notificationInfo.contactInfo.id: "03705903"
+# EMAIL服務Connection Timeout
+com.megabank.email.service.connection.timeout: 40000
+# EMAIL服務Read Timeout
+com.megabank.email.service.read.timeout: 40000
+
+# SMS
+#  兆豐簡訊服務網址
+com.megabank.sms.service.url: http://192.168.51.59:8088/wsHiB2B/MsgService.asmx
+# 簡訊服務Timeout
+com.megabank.sms.service.timeout: 30000
+# 收單通用
+# 簡訊服務參數:分行代號
+com.megabank.sms.branchNo: 917
+# 簡訊服務參數:系統別
+com.megabank.sms.businessType: QRMP
+# 發卡通用
+# 簡訊服務參數:分行代號
+com.megabank.sms.issuer.branchNo: 917
+# 簡訊服務參數:系統別
+com.megabank.sms.issuer.businessType: Q917
+# 發卡信用卡
+# 簡訊服務參數:分行代號
+com.megabank.sms.creditcard.issuer.branchNo: 917
+# 簡訊服務參數:系統別
+com.megabank.sms.creditcard.issuer.businessType: Q109
+
+# IT Monitor Web Service URL
+com.megabank.it.monitor.url: http://192.168.211.151/WEBSERVICE/SERVICE1.asmx?WSDL
+# IT 監控  AOP 是否啟動
+com.megabank.it.monitor.aop.ewallet-manage.enabled: true
+# IT 是否使用模擬的監控 Provider
+com.megabank.it.monitor.mock.enabled: true
+# IT 監控 系統代號 (收單、銀行後台共用)
+com.megabank.it.sysCode: QRAC
+
+# 監控 AP MSG_CODE, SUBCATEGORY_ID
+com.megabank.it.monitor.ewallet-manage.alive.msgCode: "MA0001"
+com.megabank.it.monitor.ewallet-manage.alive.subcategoryId: Manage_TP
+com.megabank.it.monitor.ewallet-manage.error.msgCode: "ERR003"
+com.megabank.it.monitor.ewallet-manage.error.subcategoryId: Manage_ERR
+com.megabank.it.monitor.ewallet-manage.info.msgCode: "000006"
+# AP ALIVE 排程開關
+com.megabank.it.monitor.ewallet-manage.aliveTask.enabled: true
+com.megabank.it.monitor.ewallet-manage.aliveTask.cronExpression: 0 0/5 * 1/1 * ?
+# 監控 DB MSG_CODE, SUBCATEGORY_ID
+com.megabank.it.monitor.db.alive.msgCode: "000007"
+com.megabank.it.monitor.db.alive.subcategoryId: QRMP_DB
+
+#  推播
+# 兆豐推播服務FCM網址
+com.megabank.push.service.fcm.url: http://192.168.16.41:6006/MtkPushWeb/services/GCM
+# 兆豐推播服務APNS網址
+com.megabank.push.service.apns.url: http://192.168.16.41:6006/MtkPushWeb/services/APNS
+# 兆豐推播服務FCM API KEY
+com.megabank.push.service.fcm.api.key: AAAAuD9fpEw:APA91bFAhahFANaB6KPWp45ELQdFP22cBVFPD5CFXnCZTCkvfo7nYYYHKynt3mJmkLSrmNitUGzdYftKw7TZsZpH0obHvcfUsUmTyJ7REMefo0jUYf-Nh7cPuxGKn-V8kHO9hlVAow5r
+# 兆豐推播服務APNS憑證、密碼
+com.megabank.push.service.apns.certFile: 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
+com.megabank.push.service.apns.certPass: 1qaz2wsx
+# 兆豐推播服務APNS服務設定: 是否為正式區
+com.megabank.push.service.apns.production: False
+# 兆豐推播服務timeout
+com.megabank.push.service.timeout: 30000
+
+# QRP 相關設定
+# QRP服務網址
+qrp.url: http://localhost:8099/qrp-url/
+
+# QRP CREDITCARD ACQ 設定
+qrp.creditcard.acq.url: http://localhost:8099/qrp-creditcard-acq-url/
+
+# QRP 相關參數
+# 銀行付款Server/APP
+qrp.serverid.iss: "01701037059030100000002"
+qrp.verifycode.key.iss: A9B65C87BD035AAF47A6D8287D28903A
+# 自建收款APP
+qrp.serverid.merchantApp: "01701037059030200000005"
+qrp.verifycode.key.merchantApp: B9B65C87BD035AAF47A6D8287D289DDD
+# 消費扣款收單系統
+qrp.serverid.acq: "01701037059000000000003"
+qrp.verifycode.key.acq: A9B65C87BD035AAF47A6D8287D289BBB
+# 台灣PAY收款APP
+qrp.serverid.fisc.merchantApp: "94902543907000290000001"
+
+# 兆豐國際商業銀行統一編號
+com.megabank.invoiceNo: "03705903"
+
+# 兆豐FTP 連線預設設定
+com.megabank.ftp.defaultTimeout: 600
+com.megabank.ftp.connectionTimeout: 120
+com.megabank.ftp.dataTimeout: 60
+
+# 兆豐主機對帳撥款資料交換FTP
+com.megabank.ftp.host: localhost
+com.megabank.ftp.port: 1979
+com.megabank.ftp.user: qrmpftp
+com.megabank.ftp.pwd: Qrmp1234
+com.megabank.ftp.disb.uploadPath:
+com.megabank.ftp.disbr.downloadPath:
+
+# 特店檔及端末檔自動化上傳FTP
+com.megabank.ftp.fisc.host: 127.0.0.1
+com.megabank.ftp.fisc.port: 1979
+com.megabank.ftp.fisc.user: megafisc
+com.megabank.ftp.fisc.pwd: "!qaz2wsx"
+com.megabank.ftp.fisc.uploadPath: Out
+com.megabank.ftp.fisc.downloadPath: in/success
+
+# 報表簽核系統FTP，StoreProcedure時間設定03:30
+com.megabank.ftp.report-system.host: "192.168.51.208"
+com.megabank.ftp.report-system.port: 21
+com.megabank.ftp.report-system.user: ProdAP
+com.megabank.ftp.report-system.pwd: megaap
+
+
+# 兆豐 DW FTP 相關設定
+com.megabank.ftp.dw.host: localhost
+com.megabank.ftp.dw.port: 21
+com.megabank.ftp.dw.user: ftpucb1
+com.megabank.ftp.dw.pwd: ftpucb1
+com.megabank.ftp.dw.dwcmaudidd.file.name: DW_CMAUDID.D
+com.megabank.ftp.dw.dwcmaudidd.file.path: ftpout
+
+# 信用卡面圖片/廣告管理上傳FTP
+com.megabank.ftp.img.host: 192.168.211.241
+com.megabank.ftp.img.port: 21
+com.megabank.ftp.img.user: ftpuser
+com.megabank.ftp.img.pwd: Megaap03
+
+
+##兆豐對外檔案傳輸系統
+com.megabank.ftp.fileServer.host: 192.168.16.28
+com.megabank.ftp.fileServer.port: 21
+com.megabank.ftp.fileServer.user: AP2APUSER
+com.megabank.ftp.fileServer.pwd: AP2APUSR1
+
+
+##cht-config 系統共用ftp
+com.megabank.ftp.acq.host: 192.168.211.241
+com.megabank.ftp.acq.port: 21
+com.megabank.ftp.acq.user: ftpuser
+com.megabank.ftp.acq.pwd: Megaap03
+
+#兆豐紅利相關設定
+com.megabank.ftp.iss.reward.host: localhost
+com.megabank.ftp.iss.reward.port: 1979
+com.megabank.ftp.iss.reward.user: qrmpftp
+com.megabank.ftp.iss.reward.pwd: Qrmp1234
+com.megabank.ftp.iss.reward.path.local: D:/ewalletdata/rewards
+com.megabank.ftp.iss.reward.path.local.template: /template
+com.megabank.ftp.iss.reward.path.local.template.fileName: 紅利匯入範本.xlsx
+com.megabank.ftp.iss.reward.path.local.excel: /excel
+com.megabank.ftp.iss.reward.path.local.send: /send
+com.megabank.ftp.iss.reward.path.local.recv: /recv
+com.megabank.ftp.iss.reward.path.remote: /qrmpftp/iss/bp
+com.megabank.ftp.iss.reward.path.remote.excel: /excel
+com.megabank.ftp.iss.reward.path.remote.excel.backup: /excel/backup
+com.megabank.ftp.iss.reward.path.remote.send: /send
+com.megabank.ftp.iss.reward.path.remote.send.backup: /send/backup
+com.megabank.ftp.iss.reward.path.remote.recv: /recv
+com.megabank.ftp.iss.reward.path.remote.recv.backup: /recv/backup
+# 紅利平台部分功能(FWP722W、FWP723W、FWP725W、FWP726W)限定以下單位代號才能使用，多組以逗號,分隔，空白代表不限單位別。
+com.megabank.dept.id.iss.reward: "917,900,109"
+
+# 兆豐假日整檔 API UAT
+com.megabank.api.businessCalendar: http://192.168.53.74:9080/Concord_ServerFrameworkWeb/DBQuery/Common/Cmlndate?PAGE_INDEX=
+# 兆豐假日檔單日 API UAT
+com.megabank.api.businessDay: http://192.168.53.74:9080/Concord_ServerFrameworkWeb/DBQuery/Common/Cmbrhd?ACTION=IS_BRN_OPEN_DATE&BRN=007&TXN_DATE=
+# 兆豐店家資料查詢API (測試區)
+com.megabank.api.queryMerchantInfo: http://192.168.51.171:1152/InternalApi/Merchant/QueryMerchantInfo
+#com.megabank.api.queryMerchantInfo: http://localhost:8090/ewallet/api/test/InternalApi/Merchant/QueryMerchantInfo
+
+# 兆豐店家入帳帳號資料檢核 (QRMP To兆豐) (測試區)
+com.megabank.api.bankSvcRq: http://192.168.53.18/xmlgw/Ap2ApEndpointServlet
+# 兆豐店家入帳帳號資料檢核 MAC KEY
+com.megabank.api.bankSvcRqMacKey: ""
+# 兆豐店家入帳帳號資料檢核內部電文設定 (PROD、FAKER)
+com.megabank.api.mock.type: FAKER
+
+# url 白名單
+relay.url.whitelist:
+
+# POS API伺服器預設金鑰設定
+ewallet.pos.api.serv.pbk: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDpzXMFI0ct78JbWid8L1ZqDO5DGjccMuiMdyPExvErePGQF8bUmSzVjar86G9pfnqoGzE+KzeDpvTLDAbatOgl1l76b1yTzbocQGf+0NA8Ud8V1/IXuHcSCzPHC65U6mksy24uHtyE15yA9kMtAT8JgMjSLTXnsm7pGdQDj5HEuwIDAQAB
+ewallet.pos.api.serv.pvk: MIICXQIBAAKBgQDpzXMFI0ct78JbWid8L1ZqDO5DGjccMuiMdyPExvErePGQF8bUmSzVjar86G9pfnqoGzE+KzeDpvTLDAbatOgl1l76b1yTzbocQGf+0NA8Ud8V1/IXuHcSCzPHC65U6mksy24uHtyE15yA9kMtAT8JgMjSLTXnsm7pGdQDj5HEuwIDAQABAoGATgR1pjhAb067T1qFJIZzUo4gD5o2250NRpoXAHnWTkhca1XTzmuSr2xHq38wdkZzTZdNVk57ht32f67ytpZ5hEt+d/XKqx51YLPJT31TnGldlppYWOuHb3pf4aZNxIxHvZi0xz+9fd93nbLldOBUVvYl1sq42nLgMAfTW184jMECQQD1iSGd+agcpr41kF25/RsKnnfCVZfIIo/XXet15tFALhA0HJdXOnSP+bQPr4mOcbUKSwxVMUZ+O/YSBCIlmNNhAkEA88ROUgRcL37QwoilKshLEbt2G+XnyOZgubCn1JPYcJM8hR+CzZ4uhF99Ei4UTCVnKdehGoY/vgrPcaRd47dpmwJBAO8i+RfYMJB/IeAfU/mx9qVYA8HFBUgJyVhzg8FX5dMBSgzHD+sH5sDW7TUdvPZ77lwxDbjnfgWyNo4DcpJ1juECQF8+BfPZrEMKY3p+dTogA+Srv9vqmgNOr+Ade5V9JoXloTHKPAsmkLo7rNxbkKanvoUEsPdyGJmiE6ctN1nvoZ0CQQDWsS58Pg7B/7Bfecn5xcIK9dwnN2z6C6Yjsodjej4TkGQuSUN66xawk6Ms2+QPl9ipOn5aawpJQE4X7zztQs+i
+
+# APP線上人數api主機
+com.megabank.api.tp.memberAccessCount.url: http://localhost:8090/ewallet/api/system/cache/MEMBER_ACCESS_TOKEN_CACHE/estimatedSize
+com.megabank.api.lk.memberAccessCount.url: http://localhost:8090/ewallet/api/system/cache/MEMBER_ACCESS_TOKEN_CACHE/estimatedSize
+
+# 紅利明細查詢-六個月前-DW api (測試區)
+com.megabank.api.inqBonusFromDw.url: https://192.168.211.139/TicketXpressService/controller.action
+
+#################### 外部服務 ####################
+
+# 台灣Pay LINE API 設定
+taiwanpay.line.url: http://localhost:8099/line/
+taiwanpay.line.request.timeout: 63000
+taiwanpay.line.url.whitelist: https://taiwanpay-line.fisc-test.com.tw,https://taiwanpay-line.fisc.com.tw
+taiwanpay.line.send.src.id: "LINE017"
+taiwanpay.line.key.id: "0000000"
+# 憑證檔案位置
+taiwanpay.line.cert.file:
+# 憑證KeyStore密碼
+taiwanpay.line.cert.file.pwd:
+
+# e-bill API 設定
+ebill.url: http://localhost:8099/ebill
+ebill.request.timeout: 63000
+# e-bill MAC安控機制計算,需輸入給HSM的key label 與 mask
+ewallet.hsm.ebill.mac.key.label: EBILL
+ewallet.hsm.ebill.mac.mask: "11110000"
+# e-bill 加解密用HSM Server URL
+ebill.security.hsm.url: http://192.168.51.81:11080/macserver
+# e-bill電文相關設定
+## 通路代號(訊息來源代碼)，預設為0170000，有需要更改再設定
+# ebill.src.id: 0170000
+## MAC Seed Key之識別碼，預設為017V001，有需要更改再設定
+# ebill.key.id: 017V001
+
+# 銀行信用卡卡務主機URL
+com.megabank.credit.card.server.url: http://192.168.53.4:9090/{0}
+# 銀行信用卡卡務主機連線 timeout
+com.megabank.credit.card.server.request.timeout: 10000
+com.megabank.credit.card.telegram.omit.xml.declaration: true
+
+---
+
+#################### 開發環境設定 ####################
+# 本地開發時的profile，設定要使用的資料來源
+spring.profiles: development
+
+# 登入與API驗證設定
+cht.security.login.authentication.types: IAC_PROXY,IAM,TEST
+
+# 遠端SQL Server資料來源
+spring.datasource.name: ewalletDs
+spring.datasource.url: jdbc:sqlserver://192.168.211.219:1433;databaseName=ewallet_phase2
+spring.datasource.username: chtewallet
+spring.datasource.password: "!qaz2wsx"
+spring.datasource.driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+# 開發模式通知收件者
+proj.dev.notify: ewallet-test-notifier@cht.com.tw
+
+# 開發模式模擬發送，不實際執行發送通知
+proj.dev.send.notify.simulated: false
+
+#聯外ewallet-edge-gateway 網址設定，更新路由時使用
+#gateway facade 設定
+ewallet.system.edge.gatewayFacade.host: localhost
+ewallet.system.edge.gatewayFacade.port: 8099
+ewallet.system.edge.gatewayFacade.scheme: http
+ewallet.system.edge.gatewayFacade.contextPath: /
+
+#gateway 服務設定，可設定多台
+ewallet.system.edge.gateways[0].host: localhost
+ewallet.system.edge.gateways[0].port: 8099
+ewallet.system.edge.gateways[0].scheme: http
+ewallet.system.edge.gateways[0].contextPath: /
+
+ewallet.acq-creditcard.batch.api: http://localhost:8010/ewallet-acq-creditcard/api/acq/creditcard/fwp400w/execute
+com.megabank.ftp.acq.fiscWeb.downloadPath: /mb/acq/fiscWeb
+com.megabank.ftp.acq.receipt.downloadPath: /mb/acq/receipt
+
+ewallet.file.acq.fiscWeb: D:/acq_test/fiscWeb
+ewallet.file.acq.receipt: D:/acq_test/receipt
+
+---
+
+#################### 正式環境設定 ####################
+# 應將這些設定設置在伺服器環境上
+spring.profiles: production
+
+# 登入與API驗證設定
+cht.security.login.authentication.types: IAC_PROXY
+
+# JNDI資料來源
+spring.datasource.name: ewalletDs
+spring.datasource.jndi-name: java:/ewalletDs
+
+#聯外ewallet-edge-gateway 網址設定，更新路由時使用
+#gateway facade 設定
+ewallet.system.edge.gatewayFacade.host: 192.168.211.241
+ewallet.system.edge.gatewayFacade.port: 8080
+ewallet.system.edge.gatewayFacade.scheme: http
+ewallet.system.edge.gatewayFacade.contextPath: /
+
+#gateway 服務設定，可設定多台
+ewallet.system.edge.gateways[0].host: 192.168.211.241
+ewallet.system.edge.gateways[0].port: 8080
+ewallet.system.edge.gateways[0].scheme: http
+ewallet.system.edge.gateways[0].contextPath: /
+
+ewallet.acq-creditcard.batch.api: http://localhost:8080/ewallet-acq-creditcard/api/acq/creditcard/fwp400w/execute
+com.megabank.ftp.acq.fiscWeb.downloadPath: /qrmpftp/acq/fiscWeb
+com.megabank.ftp.acq.receipt.downloadPath: /qrmpftp/acq/receipt
+
+ewallet.file.acq.fiscWeb: D:/ewalletdata/acq/fiscWeb
+ewallet.file.acq.receipt: D:/ewalletdata/acq/receipt
