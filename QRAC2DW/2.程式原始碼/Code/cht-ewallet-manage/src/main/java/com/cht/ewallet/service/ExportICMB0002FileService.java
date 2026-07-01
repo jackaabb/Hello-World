@@ -48,6 +48,9 @@ public class ExportICMB0002FileService {
 	private IDMBFileExportUtil idmbFileExportUtil;
 
 	@Autowired
+	private DwFtpUploadService dwFtpUploadService;
+
+	@Autowired
 	private UspExecuteInfoRepository uspExecuteInfoRepository;
 
 	// 檔案產製位置
@@ -190,10 +193,8 @@ public class ExportICMB0002FileService {
 		} while (slice.hasNext());
 
 		idmbFileExportUtil.exportControlFile(filePath, dataFileName, controlFileName, startDate, endDate, Long.toString(slice.getTotalElements()));
-		idmbFileExportUtil.uploadFile(
-				new String[] {dataFileName, controlFileName },
-				new String[] {filePath, filePath },
-				new String[] {dataFileName, controlFileName });
+
+		dwFtpUploadService.uploadToBoth(filePath, new String[] { dataFileName, controlFileName });
 
 		executeInfo.setUspDate(yesterday.replace("-", ""));
 		uspExecuteInfoRepository.save(executeInfo);
@@ -332,12 +333,8 @@ public class ExportICMB0002FileService {
 		
 		idmbFileExportUtil.exportControlFile(filePath, dataFileName, controlFileName, startTime, endTime,
 				Long.toString(slice.getTotalElements()));
-		
-		idmbFileExportUtil.uploadFile(
-				new String[] { dataFileName, controlFileName}, 
-				new String[] { filePath, filePath }, 
-				new String[] { dataFileName, controlFileName}
-				);
+
+		dwFtpUploadService.uploadToBoth(filePath, new String[] { dataFileName, controlFileName });
 	}
 	
 	private ArrayList<IDMBFileExportColumn> genExportColumns() {

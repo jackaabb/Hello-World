@@ -548,13 +548,21 @@ com.megabank.ftp.report-system.user: ProdAP
 com.megabank.ftp.report-system.pwd: megaap
 
 
-# 兆豐 DW FTP 相關設定
+# 兆豐 DW FTP 相關設定（第一組）
 com.megabank.ftp.dw.host: localhost
 com.megabank.ftp.dw.port: 21
 com.megabank.ftp.dw.user: ftpucb1
 com.megabank.ftp.dw.pwd: ftpucb1
+com.megabank.ftp.dw.remotePath: ftpout
 com.megabank.ftp.dw.dwcmaudidd.file.name: DW_CMAUDID.D
 com.megabank.ftp.dw.dwcmaudidd.file.path: ftpout
+
+# 兆豐 DW FTP 相關設定（第二組）
+com.megabank.ftp.dw2.host: localhost
+com.megabank.ftp.dw2.port: 21
+com.megabank.ftp.dw2.user: ftpucb2
+com.megabank.ftp.dw2.pwd: ftpucb2
+com.megabank.ftp.dw2.remotePath: ftpout2
 
 # 信用卡面圖片/廣告管理上傳FTP
 com.megabank.ftp.img.host: 192.168.211.241
